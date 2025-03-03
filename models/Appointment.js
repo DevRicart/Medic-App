@@ -1,26 +1,26 @@
-import { mongo, Mongoose } from "mongoose";
+import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const appointmentSchema = new Schema({
-    date: {
-        type: Date,
-        required: true
-    },
-    doctorId: {
-        type: String,
-        required: true
-    },
-    patientId: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+  date: {
+    type: Date,
+    required: true
+  },
+  doctorId: {
+    type: String,
+    required: true
+  },
+  pacientId: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+})
 
-const appointment = mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.model('Appointment', appointmentSchema)
 
-export default appointment;
+export default Appointment

@@ -1,48 +1,53 @@
-import { Appointment } from '../models/Appointment.js';
+import Appointment from '../models/Appointment.js'
 
 const getAllAppointments = async () => {
-    return await Appointment.find();
+  return await Appointment.find()
 }
 
-const getAppointment = async (id) => {
-    try {
-        return await Appointment.findById(id);
-    } catch (error) {
-        throw new Error(error);
-    }
-} 
-
-const saveAppointment = async ({date, doctorId, pacientId}) => {
-    try {
-        const prescription = new Appointment({date, doctorId, pacientId});
-        return await prescription.save();
-    } catch (error) {
-        throw new Error(error);
-    }
+const getAppointment = async id => {
+  try {
+    return await Appointment.findById(id)
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
-const updateAppointment = async (id, {date, doctorId, pacientId}) => {
-    try {
-        return await Appointment.findByIdAndUpdate(id, {date, doctorId, pacientId}, {new: true});
-    } catch (error) {
-        throw new Error(error);
-    }  
+const saveAppointment = async ({ date, doctorId, pacientId }) => {
+  try {
+    const appointment = new Appointment({ date, doctorId, pacientId })
+    return await appointment.save()
+  } catch (error) {
+    console.error('Error saving appointment:', error)
+    throw new Error(`Error saving appointment: ${error.message}`)
+  }
 }
 
-const deleteAppointment = async (id) => {
-    try {
-        return await Appointment.findByIdAndDelete(id);
-    } catch (error) {
-        throw new Error(error);
-    }
+const updateAppointment = async (id, { date, doctorId, pacientId }) => {
+  try {
+    return await Appointment.findByIdAndUpdate(
+      id,
+      { date, doctorId, pacientId },
+      { new: true }
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const deleteAppointment = async id => {
+  try {
+    return await Appointment.findByIdAndDelete(id)
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 const appointmentRepository = {
-    getAllAppointments,
-    getAppointment,
-    savbeAppointment,
-    updateAppointment,
-    deleteAppointment
+  getAllAppointments,
+  getAppointment,
+  saveAppointment,
+  updateAppointment,
+  deleteAppointment
 }
 
-export default appointmentRepository;
+export default appointmentRepository

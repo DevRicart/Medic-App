@@ -1,15 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-mongoose.connect('mongodb://localhost:27017/medicapp')
+const dbUri = 'mongodb://localhost:27017/medicapp'
 
-const db = mongoose.connection;
+let isConnected = false
 
-db.openUri('error', console.error.bind(console, 'connection error: '));
+const connectDB = async () => {
+  if (isConnected) {
+    console.log('Já existe uma conexão ativa com o MongoDB.')
+    return
+  }
 
-db.once(
-    'open', function() {
-        console.log('Connected to database');
-    }
-);
+  try {
+    await mongoose.connect(dbUri) // Removidas opções obsoletas
+    isConnected = true
+    console.log('Database connected successfully!')
+  } catch (error) {
+    console.error('Connection error:', error)
+    process.exit(1)
+  }
+}
 
-export default db;
+export default connectDB
